@@ -40,7 +40,7 @@ class BookShelf extends Component {
       								<BookShelfChanger shelfId={this.shelf.id} bookId={book.id} onChangeShelf={(event) => this.changeShelf(event, book.id)} />
       							</div>
       							<div className="book-title">{book.title}</div>
-      							<div className="book-authors">{book.authors.join()}</div>
+      							<div className="book-authors">{book.authors.join(', ')}</div>
                            	</div>
                        	</li>
        				))}
