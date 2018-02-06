@@ -70,9 +70,15 @@ class BooksApp extends React.Component {
 	books=[]
 
 	componentDidMount(){
-      	console.log("Setting state..................................")
 		this.setState({books: this.books})
 	}
+
+	changeShelf = (newShelf, bookId) => {
+        this.setState(function (state,props) {
+          	{ return {books: (state.books.map (book => book.id===bookId ? 
+      				{...book, shelf: newShelf} : book ))}}
+    	  })
+    }
 
   render() {
     
@@ -111,7 +117,7 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
                 <div>
           			{ this.shelves.map( (shelf) => 
-	          			<BookShelf key={shelf.id} shelf={shelf} books={this.state.books} />
+	          			<BookShelf key={shelf.id} shelf={shelf} books={this.state.books} changeShelf={this.changeShelf}/>
 					)}
             	</div>
           	</div>

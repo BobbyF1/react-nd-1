@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React from 'react'
 
 const BookShelfChanger = (props) => (
-          <div className="book-shelf-changer">
-            <select defaultValue={props.shelfId} >
+  		<div className="book-shelf-changer">
+            <select defaultValue={props.shelfId} onChange={ (event) => props.onChangeShelf(event.target.value)}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

@@ -19,6 +19,12 @@ class BookShelf extends Component {
       this.setState({books: props.books})
     }
 
+	changeShelf(newShelf, bookId){
+      if(newShelf!==this.shelf.id){
+        	this.props.changeShelf(newShelf, bookId)
+    	}
+    }
+
   render(){
 
     return (
@@ -31,7 +37,7 @@ class BookShelf extends Component {
       						<div className="book">
       							<div className="book-top">
       								<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: book.image }}></div>
-      								<BookShelfChanger shelfId={this.shelf.id} bookId={book.id}/>
+      								<BookShelfChanger shelfId={this.shelf.id} bookId={book.id} onChangeShelf={(event) => this.changeShelf(event, book.id)} />
       							</div>
       							<div className="book-title">{book.title}</div>
       							<div className="book-authors">{book.authors.join()}</div>
