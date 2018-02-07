@@ -36,7 +36,7 @@ class BookShelf extends Component {
       					<li key={book.id}>
       						<div className="book">
       							<div className="book-top">
-      								<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: book.image }}></div>
+      								<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + book.imageLinks.smallThumbnail+'")'  }}></div>
       								<BookShelfChanger shelfId={this.shelf.id} bookId={book.id} onChangeShelf={(event) => this.changeShelf(event, book)} />
       							</div>
       							<div className="book-title">{book.title}</div>
