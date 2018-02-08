@@ -57,11 +57,7 @@ class BooksApp extends React.Component {
     return (
     	<div className="app">
      		<Route path="/search" render={( { history } ) => (
-            	<BookSearch
-              		onCreateContact={(contact) => {
-                		this.createContact(contact)
-                		history.push('/')
-              		}}/>
+            	<BookSearch myBooks={this.state.books}/>
 				)}
 			/>
 	

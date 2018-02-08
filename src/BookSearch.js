@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import * as BooksAPI from './BooksAPI'
 import BookShelfChanger from './BookShelfChanger.js'
+import { Link } from 'react-router-dom'
 
 class BookSearch extends Component{
 
@@ -9,9 +10,8 @@ class BookSearch extends Component{
     this.state = {
       books : []
 	};
-
   }
-  
+    
   maxResults = 10
 
     handleChange(event) {
@@ -26,28 +26,29 @@ class BookSearch extends Component{
           
           BooksAPI.search(event.target.value, this.maxResults).then( (foundBooks) => 
               { 
-                  foundBooks.error ? this.setState({books: [] }) : this.setState({books: foundBooks })
+                  foundBooks.error ? this.setState({books: [] }) : this.setState({books: foundBooks.map( (book) => 
+						{	
+                    		const myMatch = this.props.myBooks.filter( (my) => my.id===book.id)
+                           	book.shelf = myMatch.length > 0 ? myMatch[0].shelf : "none"
+                           	return book
+                    	}
+				    )})
               }
           )
 		}
-}
+	}
   
   
   	render(){
       
+      console.log(this.state.books)
+      
       return(
           <div className="search-books">
             <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+                <Link to="/" className="close-search" >Close</Link>
 
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
+<div className="search-books-input-wrapper">
                 <input type="text" placeholder="Search by title or author" value={this.state.value} onChange={(e) => this.handleChange(e)} />
               </div>
             </div>
@@ -61,10 +62,10 @@ class BookSearch extends Component{
 											style={ 
                                               book.imageLinks && book.imageLinks.smallThumbnail ? { width: 128, height: 193, backgroundImage: 'url("' + book.imageLinks.smallThumbnail+'")'  } :	{ width: 128, height: 193}}>
 									</div>
-      								<BookShelfChanger shelfId="none" bookId={book.id} onChangeShelf={(event) => this.changeShelf(event, book)} />
+      								<BookShelfChanger shelfId={book.shelf} bookId={book.id} onChangeShelf={(event) => this.changeShelf(event, book)} />
       							</div>
       							<div className="book-title">{book.title}</div>
-      							<div className="book-authors">{book.authors? book.authors.join(" ") : ""}</div>
+      							<div className="book-authors">{book.authors ? book.authors.join(" ") : ""}</div>
                            	</div>
                        	</li>
        				))}
