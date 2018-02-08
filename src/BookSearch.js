@@ -14,6 +14,14 @@ class BookSearch extends Component{
     
   maxResults = 10
 
+
+	changeShelf(newShelf, book){
+      if(newShelf!==book.shelf){
+        	this.props.changeShelf(newShelf, book)
+    	}      
+    }
+
+
     handleChange(event) {
 
       if(event.target.value.trim()===""){
@@ -22,8 +30,6 @@ class BookSearch extends Component{
 		else
 		{
       
-          console.log("Searching for [" + event.target.value + "]")
-          
           BooksAPI.search(event.target.value, this.maxResults).then( (foundBooks) => 
               { 
                   foundBooks.error ? this.setState({books: [] }) : this.setState({books: foundBooks.map( (book) => 
@@ -41,16 +47,13 @@ class BookSearch extends Component{
   
   	render(){
       
-      console.log(this.state.books)
-      
       return(
           <div className="search-books">
             <div className="search-books-bar">
                 <Link to="/" className="close-search" >Close</Link>
-
-<div className="search-books-input-wrapper">
-                <input type="text" placeholder="Search by title or author" value={this.state.value} onChange={(e) => this.handleChange(e)} />
-              </div>
+				<div className="search-books-input-wrapper">
+                	<input type="text" placeholder="Search by title or author" value={this.state.value} onChange={(e) => this.handleChange(e)} />
+              	</div>
             </div>
             <div className="search-books-results">
       			<ol className="books-grid">

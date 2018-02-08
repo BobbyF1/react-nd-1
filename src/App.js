@@ -33,6 +33,9 @@ class BooksApp extends React.Component {
 
 	changeShelf = (newShelf, book) => {
       
+      	console.log(newShelf)
+      	console.log(book)
+      
 		BooksAPI.update(book, newShelf)
 		
       	if(newShelf==="none"){
@@ -40,7 +43,7 @@ class BooksApp extends React.Component {
           //add it again if they want to via the Search.
           
 			this.setState(function(prevState) {
-              return { books: prevState.filter((b) => b.id !== book.id) }})
+              return { books: prevState.length > 0 ? prevState.filter((b) => b.id !== book.id)  : [] } } )
          }
       else
       {
@@ -53,18 +56,21 @@ class BooksApp extends React.Component {
 
   render() {
 
+    console.log("APP RENDER")
+    console.log(this.state.books)
+    
     
     return (
     	<div className="app">
      		<Route path="/search" render={( { history } ) => (
-            	<BookSearch myBooks={this.state.books}/>
+            	<BookSearch myBooks={this.state.books} changeShelf={this.changeShelf}/>
 				)}
 			/>
 	
 			<Route exact path="/" render={()=> (
              	<div className="list-books">
 	            	<div className="list-books-title">
-    	          	<h1>MyReads</h1>
+    	          		<h1>MyReads</h1>
         	    	</div>
        	    		<div className="list-books-content">
        					<div>

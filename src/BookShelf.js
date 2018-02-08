@@ -15,7 +15,13 @@ class BookShelf extends Component {
     this.shelf = props.shelf 
   }
 
+	componentWillRemount(props){
+      	console.log("component will remount")
+    }
+
 	componentWillReceiveProps(props){
+      console.log("PROPS ----------------------------")
+      console.log(props)
       this.setState({books: props.books})
     }
 
@@ -27,6 +33,9 @@ class BookShelf extends Component {
 
   render(){
 
+    console.log("ShelfRender")
+    console.log(this.state)
+    
     return (
       	<div className="bookshelf">
       		<h2 className="bookshelf-title">{this.shelf.title}</h2>
