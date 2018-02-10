@@ -4,25 +4,23 @@ import BookShelfChanger from './BookShelfChanger.js'
 
 class Book extends Component{
 
-	book : { }  
+	book : { };
 
 	static propTypes = {
-      book: PropTypes.object.isRequired,
-      onChangeShelf: PropTypes.func.isRequired
-    }
+		book: PropTypes.object.isRequired,
+		onChangeShelf: PropTypes.func.isRequired
+    };
 
   	changeShelf = (newShelf, book) => {
-      this.props.onChangeShelf(newShelf, book)
-    }
+		this.props.onChangeShelf(newShelf, book);
+    };
 
 	componentWillReceiveProps = (props) => {
-      	this.setState({book: props.book})
-	}
+      	this.setState({book: props.book});
+	};
   
     render(){
-      
-      	const {book} = this.props
-      
+      	const {book} = this.props;
     	return (
 			<div className="book">
 				<div className="book-top">
@@ -37,9 +35,9 @@ class Book extends Component{
 				<div className="book-title">{book.title}</div>
 				<div className="book-authors">{book.authors ? book.authors.join(" ") : ""}</div>
       	</div>
-		)
-	}
-}
+		);
+	};
+};
 
 
-export default Book
+export default Book;
