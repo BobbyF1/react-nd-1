@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import * as BooksAPI from './BooksAPI'
-import BookShelfChanger from './BookShelfChanger.js'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
+import Book from './Book.js'
 
 class BookSearch extends Component{
 
@@ -21,11 +21,13 @@ class BookSearch extends Component{
   maxResults = 10
 
 
-	changeShelf(newShelf, book){
+	changeShelf= (newShelf, book)=>{
       if(newShelf!==book.shelf){
+        console.log("------------------------------>")
+        console.log(this.props)
         	this.props.changeShelf(newShelf, book)
     	}      
-    }
+	}
 
 
     handleChange(event) {
@@ -53,6 +55,9 @@ class BookSearch extends Component{
   
   	render(){
       
+      console.log("BookSearch")
+      console.log(this.props)
+      
       return(
           <div className="search-books">
             <div className="search-books-bar">
@@ -65,17 +70,7 @@ class BookSearch extends Component{
       			<ol className="books-grid">
       				{this.state.books.map( (book) => (
       					<li key={book.id}>
-      						<div className="book">
-      							<div className="book-top">
-      								<div className="book-cover" 
-											style={ 
-                                              book.imageLinks && book.imageLinks.smallThumbnail ? { width: 128, height: 193, backgroundImage: 'url("' + book.imageLinks.smallThumbnail+'")'  } :	{ width: 128, height: 193}}>
-									</div>
-      								<BookShelfChanger shelfId={book.shelf} bookId={book.id} onChangeShelf={(event) => this.changeShelf(event, book)} />
-      							</div>
-      							<div className="book-title">{book.title}</div>
-      							<div className="book-authors">{book.authors ? book.authors.join(" ") : ""}</div>
-                           	</div>
+							<Book book={book} onChangeShelf={this.changeShelf} />
                        	</li>
        				))}
   				</ol>

@@ -42,15 +42,11 @@ class BooksApp extends React.Component {
     }
 
   render() {
-
-    console.log("APP RENDER")
-    console.log(this.state.books)
-    
-    
+   
     return (
     	<div className="app">
      		<Route path="/search" render={( { history } ) => (
-            	<BookSearch myBooks={this.state.books} changeShelf={this.changeShelf}/>
+            		<BookSearch myBooks={this.state.books} changeShelf={(s,b) => this.changeShelf(s,b)}/>
 				)}
 			/>
 	
@@ -62,7 +58,7 @@ class BooksApp extends React.Component {
        	    		<div className="list-books-content">
        					<div>
           					{ shelves.map( (shelf) => 
-	          					<BookShelf key={shelf.id} shelf={shelf} books={this.state.books.filter( (b) => b.shelf===shelf.id)} changeShelf={this.changeShelf}/>
+	          					<BookShelf key={shelf.id} shelf={shelf} books={this.state.books.filter( (b) => b.shelf===shelf.id)} changeShelf={(s,b) => this.changeShelf(s,b)}/>
 							)}
             			</div>
           			</div>
