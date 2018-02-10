@@ -5,23 +5,13 @@ import { Route } from 'react-router-dom';
 import BookShelf from './BookShelf.js'
 import BookSearch from './BookSearch.js'
 import { Link } from 'react-router-dom'
+import shelves  from './Shelves.js'
 
 class BooksApp extends React.Component {
-
-  constructor(props){
-    super(props)
-  }
   
   state = {
-	books : [],
-	showSearchPage: false
+	books : []
   }
-
-	shelves = [
-      {	id: "currentlyReading", title: "Currently Reading"},
-      { id: "wantToRead", title: "Want to Read"},
-      { id: "read", title: "Already Read"} 
-    ]
 
 	componentDidMount(){
 		BooksAPI.getAll().then( (returnedBooks) => {
@@ -33,9 +23,6 @@ class BooksApp extends React.Component {
 
 	changeShelf = (newShelf, book) => {
       
-      	console.log(newShelf)
-      	console.log(book)
-      
 		BooksAPI.update(book, newShelf)
 		
       	if(newShelf==="none"){
@@ -43,7 +30,7 @@ class BooksApp extends React.Component {
           //add it again if they want to via the Search.
           
 			this.setState(function(prevState) {
-              return { books: prevState.length > 0 ? prevState.filter((b) => b.id !== book.id)  : [] } } )
+              return { books: prevState.books.length > 0 ? prevState.books.filter((b) => b.id !== book.id)  : [] } } )
          }
       else
       {
@@ -74,8 +61,8 @@ class BooksApp extends React.Component {
         	    	</div>
        	    		<div className="list-books-content">
        					<div>
-          					{ this.shelves.map( (shelf) => 
-	          					<BookShelf key={shelf.id} shelf={shelf} books={this.state.books} changeShelf={this.changeShelf}/>
+          					{ shelves.map( (shelf) => 
+	          					<BookShelf key={shelf.id} shelf={shelf} books={this.state.books.filter( (b) => b.shelf===shelf.id)} changeShelf={this.changeShelf}/>
 							)}
             			</div>
           			</div>
