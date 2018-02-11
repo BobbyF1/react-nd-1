@@ -38,7 +38,7 @@ class BookSearch extends Component{
                   foundBooks.error ? this.setState({books: [] }) : this.setState({books: foundBooks.map( (book) => 
 						{	
                     		const myMatch = this.props.myBooks.filter( (my) => my.id===book.id);
-                           	book.shelf = myMatch.length > 0 ? myMatch[0].shelf : "none";
+                           			book.shelf = myMatch.length > 0 ? myMatch[0].shelf : "none";
                            	return book;
                     	}
 				    )});
@@ -53,7 +53,7 @@ class BookSearch extends Component{
 				<div className="search-books-bar">
 					<Link to="/" className="close-search" >Close</Link>
 					<div className="search-books-input-wrapper">
-						<input type="text" placeholder="Search by title or author" value={this.state.value} onChange={(e) => this.handleChange(e)} />
+						<input type="text" placeholder="Search by title or author" value={this.state.queryValue} onChange={(e) => this.handleChange(e)} />
 					</div>
 				</div>
 				<div className="search-books-results">

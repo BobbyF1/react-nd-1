@@ -22,7 +22,7 @@ class BookShelf extends Component {
 
 	constructor(props){
 		super(props)
-		this.shelf = props.shelf 
+		this.shelf = props.shelf
 	}
 
 	componentWillReceiveProps = (props) => {

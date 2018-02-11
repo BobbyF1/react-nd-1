@@ -13,16 +13,19 @@ class BooksApp extends React.Component {
 		books : []
     };
 
-	componentDidMount(){
+	populateBooks(){
 		BooksAPI.getAll().then( (returnedBooks) => {
 			this.setState( {books: returnedBooks} );
 		});
+    };
+
+	componentDidMount(){
+		this.populateBooks();
 	};
 
 	changeShelf = (newShelf, book) => {
 		BooksAPI.update(book, newShelf);
-		
-      	if(newShelf==="none"){
+  		     	if(newShelf==="none"){
 			//If they set the new Shelf to "none" I'm going to delete it from our list. This will make it simpler to 
 			//add it again if they want to via the Search.
           
@@ -39,6 +42,7 @@ class BooksApp extends React.Component {
 	};
 
 	render() {
+      
 		return (
 			<div className="app">
 				<Route path="/search" render={( { history } ) => (
@@ -54,7 +58,10 @@ class BooksApp extends React.Component {
        	    		<div className="list-books-content">
 						<div>
 							{ shelves.map( (shelf) => 
-	          					<BookShelf key={shelf.id} shelf={shelf} books={this.state.books.filter( (b) => b.shelf===shelf.id)} changeShelf={(s,b) => this.changeShelf(s,b)}/>
+	          					<BookShelf key={shelf.id} shelf={shelf} 
+										books={this.state.books.filter( (b) => b.shelf===shelf.id)} 
+										changeShelf={(s,b) => this.changeShelf(s,b)}
+								/>							
 							)}
             			</div>
 					</div>
