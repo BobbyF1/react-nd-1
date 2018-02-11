@@ -3,6 +3,7 @@ import * as BooksAPI from './BooksAPI';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Book from './Book.js';
+import sortBy from 'sort-by';
 
 class BookSearch extends Component{
 
@@ -28,6 +29,7 @@ class BookSearch extends Component{
 
 
 	handleChange(event) {
+      
 		if(event.target.value.trim()===""){
 			this.setState({books: [] });
 		}
@@ -48,6 +50,7 @@ class BookSearch extends Component{
 	};
   
 	render(){
+      
 		return(
 			<div className="search-books">
 				<div className="search-books-bar">
@@ -58,7 +61,7 @@ class BookSearch extends Component{
 				</div>
 				<div className="search-books-results">
       			<ol className="books-grid">
-					{this.state.books.map( (book) => (
+					{this.state.books.sort(sortBy('title')).map( (book) => (
 						<li key={book.id}>
 							<Book book={book} onChangeShelf={this.changeShelf} />
                        	</li>

@@ -11,14 +11,12 @@ class Book extends Component{
 		onChangeShelf: PropTypes.func.isRequired
     };
 
+	//pass the call from the BookShelfChanger up to the parent component
   	changeShelf = (newShelf, book) => {
 		this.props.onChangeShelf(newShelf, book);
     };
 
-	componentWillReceiveProps = (props) => {
-      	this.setState({book: props.book});
-	};
-  
+	//note: some books don't have an image and some don't have an author. Some have multiple authors...
     render(){
       	const {book} = this.props;
     	return (
@@ -27,7 +25,7 @@ class Book extends Component{
 					<div className="book-cover" 
 						style={ 
       						book.imageLinks && book.imageLinks.smallThumbnail ?
-      							{ width: 128, height: 193, backgroundImage: 'url("' + book.imageLinks.smallThumbnail+'")'  } 
+      							{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.smallThumbnail}")` } 
       						:	{ width: 128, height: 193}}>
               		</div>
 					<BookShelfChanger shelfId={book.shelf} bookId={book.id} onChangeShelf={(event) => this.changeShelf(event, book)} />

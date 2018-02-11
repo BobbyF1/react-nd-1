@@ -25,21 +25,25 @@ class BooksApp extends React.Component {
 
 	changeShelf = (newShelf, book) => {
 		BooksAPI.update(book, newShelf);
-  		     	if(newShelf==="none"){
-			//If they set the new Shelf to "none" I'm going to delete it from our list. This will make it simpler to 
-			//add it again if they want to via the Search.
-          
+
+		//I'm going to directly update what we've got stored instead of blindly refreshing via the API each time, which would
+      	//be slower and a waste of resources. (The books list belongs to me so no-one else will be editing it on the server.)
+		if(newShelf==="none"){
+			//If they have set the Shelf to "none" on a book, I'm going to delete it from our state list. 
 			this.setState(function(prevState) {
 				return { books: prevState.books.length > 0 ? prevState.books.filter((b) => b.id !== book.id)  : [] } } );
              }
 		else
-		{
-			this.setState(function (state,props) {
-				{ return {books: (state.books.map (b => b.id===book.id ? 
-					{...b, shelf: newShelf} : b ))}}
-                });
+		{	
+          	//So it's a book being put on a "real" shelf. It could already be on a different shelf of course, so I will 
+          	//remove it from the state if it's there, then add it to the state. 
+          	book.shelf = newShelf;
+			this.setState(function(prevState) {
+				return { books: prevState.books.length > 0 ? prevState.books.filter((b) => b.id !== book.id).concat(book)  : [book] }
+             })
 		};
-	};
+   
+    };
 
 	render() {
       

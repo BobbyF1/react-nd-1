@@ -11,26 +11,9 @@ class BookShelf extends Component {
 		changeShelf: PropTypes.func.isRequired
 	};
 
-	state = {
-        books : []
-  	};
-
-    shelf : { 
-		id: "", 
-		title: ""
-    };
-
-	constructor(props){
-		super(props)
-		this.shelf = props.shelf
-	}
-
-	componentWillReceiveProps = (props) => {
-		this.setState({books: props.books});
-    }
-
+	//pass the call from the Book up to the parent component	
 	changeShelf = (newShelf, book) => {
-		if(newShelf!==this.shelf.id){
+		if(newShelf!==this.props.shelf.id){
 			this.props.changeShelf(newShelf, book);
 		}
     }
@@ -38,10 +21,10 @@ class BookShelf extends Component {
     render(){
 		return (
 			<div className="bookshelf">
-				<h2 className="bookshelf-title">{this.shelf.title}</h2>
+				<h2 className="bookshelf-title">{this.props.shelf.title}</h2>
 				<div className="bookshelf-books">
 					<ol className="books-grid">
-						{this.state.books.map( (book) => (
+						{this.props.books.sort(sortBy('title')).map( (book) => (
       					<li key={book.id}>
 							<Book book={book} onChangeShelf={this.changeShelf} />
 						</li>
